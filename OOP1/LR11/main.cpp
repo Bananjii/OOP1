@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include <string> // Додайте для роботи з рядками
+#include <string>
 #include "PassengerTransport.h"
 #include "CargoTransport.h"
 #include "Transport.h"

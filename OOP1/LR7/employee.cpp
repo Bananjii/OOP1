@@ -152,7 +152,7 @@ void Employee::insertEmployeeAtPosition() {
     std::cin >> position;
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-    if (position < 0 || position >= employees.size()) {
+    if (position < 0 || position > employees.size()) {
         std::cout << "Некоректний номер.\n";
         return;
     }

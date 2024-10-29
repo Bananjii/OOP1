@@ -38,10 +38,13 @@ void Perevezennya::setDuration(int d) {
 // Метод для введення даних
 void Perevezennya::input() {
     std::cout << "Введіть назву перевезення: ";
-    std::cin >> name;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Очищення буфера для уникнення пропуску введення
+    std::getline(std::cin, name);
+
     std::cout << "Введіть вартість перевезення: ";
     std::cin >> cost;
     setCost(cost); // Викликаємо метод для валідації
+
     std::cout << "Введіть тривалість перевезення (години): ";
     std::cin >> duration;
     setDuration(duration); // Викликаємо метод для валідації

@@ -22,7 +22,7 @@ int main() {
     double x1 = 0.4;
     double x2 = 6.8;
     double h = 0.8;
-    double a = 5;
+    double a = 46;
     double b = 1.85;
 
     double sum = 0;

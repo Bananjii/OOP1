@@ -1,5 +1,6 @@
 #include "Perevezennya.h"
 #include <iostream>
+#include <limits>
 
 Perevezennya::Perevezennya(std::string n, double c, int d) : name(n), cost(c), duration(d) {}
 

@@ -68,7 +68,7 @@ void Employee::updateEmployeeByNumber() {
     std::cin >> empNumber;
 
     // Перевірка на правильність номера
-    if (empNumber < 0 || empNumber >= employees.size()) {
+    if (empNumber < 0 || empNumber > employees.size()) {
         std::cout << "Неправильний номер службовця." << std::endl;
         return;
     }

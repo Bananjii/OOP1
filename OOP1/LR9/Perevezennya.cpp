@@ -36,17 +36,49 @@ void Perevezennya::setDuration(int d) {
         std::cout << "Тривалість не може бути негативною!" << std::endl;
 }
 
-// Метод для введення даних
 void Perevezennya::input() {
-    std::cout << "Введіть назву перевезення: ";
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Очищення буфера для уникнення пропуску введення
-    std::getline(std::cin, name);
+    // Очищення буфера на початку введення
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-    std::cout << "Введіть вартість перевезення: ";
-    std::cin >> cost;
-    setCost(cost); // Викликаємо метод для валідації
+    // Перевірка введення назви перевезення
+    while (true) {
+        std::cout << "Введіть назву перевезення: ";
+        std::getline(std::cin, name);
+        
+        if (!name.empty()) {
+            break;
+        } else {
+            std::cout << "Назва не може бути порожньою. Спробуйте ще раз.\n";
+        }
+    }
 
-    std::cout << "Введіть тривалість перевезення (години): ";
-    std::cin >> duration;
-    setDuration(duration); // Викликаємо метод для валідації
+    // Перевірка введення вартості
+    while (true) {
+        std::cout << "Введіть вартість перевезення: ";
+        std::cin >> cost;
+        if (std::cin.fail() || cost < 0) {
+            std::cout << "Вартість має бути числом більше або рівне 0. Спробуйте ще раз.\n";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        } else {
+            setCost(cost);
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Очищення потоку
+            break;
+        }
+    }
+
+    // Перевірка введення тривалості
+    while (true) {
+        std::cout << "Введіть тривалість перевезення (години): ";
+        std::cin >> duration;
+        if (std::cin.fail() || duration < 0) {
+            std::cout << "Тривалість має бути числом більше або рівне 0. Спробуйте ще раз.\n";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        } else {
+            setDuration(duration);
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Очищення потоку
+            break;
+        }
+    }
 }

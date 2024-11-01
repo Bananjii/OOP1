@@ -8,19 +8,38 @@ int main() {
     std::vector<Perevezennya*> perevezennya;
     int totalPassengers = 0;
     double totalWeight = 0.0;
-    double totalCost = 0.0; // Змінна для накопичення загальної вартості
-    int totalDuration = 0; // Змінна для накопичення загальної тривалості
+    double totalCost = 0.0;
+    int totalDuration = 0;
     int vanCount = 0;
 
     int vantazhniCount = 0;
     int pasazhyrskiCount = 0;
 
-    // Запитуємо кількість вантажних та пасажирських перевезень
-    std::cout << "Скільки вантажних перевезень ви хочете додати? ";
-    std::cin >> vantazhniCount;
+    // Запитуємо кількість вантажних перевезень з перевіркою
+    while (true) {
+        std::cout << "Скільки вантажних перевезень ви хочете додати? ";
+        std::cin >> vantazhniCount;
+        if (std::cin.fail() || vantazhniCount < 1) {
+            std::cout << "Кількість перевезень повинна бути числом більше 0. Спробуйте ще раз.\n";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        } else {
+            break;
+        }
+    }
 
-    std::cout << "Скільки пасажирських перевезень ви хочете додати? ";
-    std::cin >> pasazhyrskiCount;
+    // Запитуємо кількість пасажирських перевезень з перевіркою
+    while (true) {
+        std::cout << "Скільки пасажирських перевезень ви хочете додати? ";
+        std::cin >> pasazhyrskiCount;
+        if (std::cin.fail() || pasazhyrskiCount < 1) {
+            std::cout << "Кількість перевезень повинна бути числом більше 0. Спробуйте ще раз.\n";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        } else {
+            break;
+        }
+    }
 
     // Введення даних для вантажних перевезень
     for (int i = 0; i < vantazhniCount; i++) {
@@ -43,7 +62,6 @@ int main() {
         p->display();
         std::cout << "---------------------\n";
 
-        // Підрахунок кількості пасажирів та середньої ваги вантажу
         if (dynamic_cast<Vantazhni*>(p)) {
             totalWeight += dynamic_cast<Vantazhni*>(p)->getWeight();
             vanCount++;
@@ -51,21 +69,17 @@ int main() {
             totalPassengers += dynamic_cast<Pasazhyrski*>(p)->getPassengers();
         }
 
-        // Накопичуємо загальну вартість і тривалість
         totalCost += p->getCost();
         totalDuration += p->getDuration();
     }
 
-    // Обчислення середньої ваги вантажу
     if (vanCount > 0) {
         double avgWeight = totalWeight / vanCount;
         std::cout << "Середня вага вантажу: " << avgWeight << " тонн\n";
     }
 
-    // Виведення загальної кількості пасажирів
     std::cout << "Загальна кількість пасажирів: " << totalPassengers << "\n";
 
-    // Обчислення та виведення середньої вартості та тривалості
     int totalCount = vantazhniCount + pasazhyrskiCount;
     if (totalCount > 0) {
         double avgCost = totalCost / totalCount;
@@ -75,7 +89,6 @@ int main() {
         std::cout << "Середня тривалість перевезення: " << avgDuration << " годин\n";
     }
 
-    // Очищення пам'яті
     for (auto& p : perevezennya) {
         delete p;
     }

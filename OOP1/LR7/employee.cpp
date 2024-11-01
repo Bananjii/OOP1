@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include <limits> // Додаємо цей заголовок для std::numeric_limits
+#include <limits>
 #include "employee.h"
 
 
@@ -64,21 +64,23 @@ void Employee::displayEmployeeData() const {
 
 void Employee::updateEmployeeByNumber() {
     int empNumber;
-    std::cout << "Введіть номер службовця для оновлення: ";
-    std::cin >> empNumber;
+    while (true) {
+        std::cout << "Введіть номер службовця для оновлення: ";
+        std::cin >> empNumber;
 
-    // Перевірка на правильність номера
-    if (empNumber < 0 || empNumber > employees.size()) {
-        std::cout << "Неправильний номер службовця." << std::endl;
-        return;
+        if (empNumber < 1 || empNumber > employees.size()) {
+            std::cout << "Неправильний номер службовця. Спробуйте ще раз.\n";
+        } else {
+            break;
+        }
     }
 
-    employee_s_t& emp = employees[empNumber];
+    employee_s_t& emp = employees[empNumber - 1];
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-    std::cout << "Оновлення даних для службовця " << empNumber + 1 << ":\n";
+    std::cout << "Оновлення даних для службовця " << empNumber << ":\n";
 
     std::cout << "Нові ім'я (залиште порожнім для пропуску): ";
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Очищення буфера
     std::string newName;
     std::getline(std::cin, newName);
     if (!newName.empty()) {
@@ -90,11 +92,10 @@ void Employee::updateEmployeeByNumber() {
     std::getline(std::cin, newAgeInput);
     if (!newAgeInput.empty()) {
         int newAge = std::stoi(newAgeInput);
-        // Перевірка на вік
         if (newAge < 18) {
-            std::cout << "Вік не може бути менше 18. Оновлення не виконано." << std::endl;
+            std::cout << "Вік не може бути менше 18. Оновлення не виконано.\n";
         } else {
-            emp.age = newAge; // Оновлення віку
+            emp.age = newAge;
         }
     }
 
@@ -105,41 +106,39 @@ void Employee::updateEmployeeByNumber() {
         emp.position = newPosition;
     }
 
-    std::cout << "Дані службовця оновлено." << std::endl;
+    std::cout << "Дані службовця оновлено.\n";
 }
-
 
 void Employee::deleteEmployee() {
     int number;
-    std::cout << "Введіть номер службовця для видалення (1-" << employees.size() << "): ";
-    std::cin >> number;
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    while (true) {
+        std::cout << "Введіть номер службовця для видалення (1-" << employees.size() << "): ";
+        std::cin >> number;
 
-    if (number < 1 || number > employees.size()) {
-        std::cout << "Некоректний номер.\n";
-        return;
+        if (number < 1 || number > employees.size()) {
+            std::cout << "Некоректний номер. Спробуйте ще раз.\n";
+        } else {
+            break;
+        }
     }
 
     employees.erase(employees.begin() + (number - 1));
     std::cout << "Службовець " << number << " успішно видалений.\n";
 }
 
-void Employee::clearEmployees() {
-    employees.clear();
-    std::cout << "Всі дані службовців успішно очищені.\n";
-}
-
 void Employee::swapEmployees() {
     int index1, index2;
-    std::cout << "Введіть номер першого службовця для обміну: ";
-    std::cin >> index1;
-    std::cout << "Введіть номер другого службовця для обміну: ";
-    std::cin >> index2;
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    while (true) {
+        std::cout << "Введіть номер першого службовця для обміну: ";
+        std::cin >> index1;
+        std::cout << "Введіть номер другого службовця для обміну: ";
+        std::cin >> index2;
 
-    if (index1 < 1 || index1 > employees.size() || index2 < 1 || index2 > employees.size()) {
-        std::cout << "Некоректні номери.\n";
-        return;
+        if (index1 < 1 || index1 > employees.size() || index2 < 1 || index2 > employees.size()) {
+            std::cout << "Некоректні номери. Спробуйте ще раз.\n";
+        } else {
+            break;
+        }
     }
 
     std::swap(employees[index1 - 1], employees[index2 - 1]);
@@ -148,18 +147,21 @@ void Employee::swapEmployees() {
 
 void Employee::insertEmployeeAtPosition() {
     int position;
-    std::cout << "Введіть номер службовця після якого потрібно додати нового: ";
-    std::cin >> position;
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    while (true) {
+        std::cout << "Введіть номер службовця після якого потрібно додати нового (0-" << employees.size() << "): ";
+        std::cin >> position;
 
-    if (position < 0 || position > employees.size()) {
-        std::cout << "Некоректний номер.\n";
-        return;
+        if (position < 0 || position > employees.size()) {
+            std::cout << "Некоректний номер. Спробуйте ще раз.\n";
+        } else {
+            break;
+        }
     }
 
     employee_s_t emp;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::cout << "Введіть дані для нового службовця:\n";
-    
+
     std::cout << "Ім'я: ";
     std::getline(std::cin, emp.name);
 
@@ -173,3 +175,9 @@ void Employee::insertEmployeeAtPosition() {
     employees.insert(employees.begin() + position, emp);
     std::cout << "Новий службовець успішно доданий після службовця " << position + 1 << ".\n";
 }
+
+void Employee::clearEmployees() {
+    employees.clear();
+    std::cout << "Всі дані службовців успішно очищені.\n";
+}
+

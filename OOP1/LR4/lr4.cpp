@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <Windows.h>
-#include <limits> // Для numeric_limits
+#include <limits>
 
 using namespace std;
 
@@ -26,7 +26,7 @@ public:
             cout << "Введіть ім'я: ";
             getline(cin, name);
             if (name.empty()) {
-                cout << "Поле 'Ім'я' не може бути порожнім. Повторіть ввод.\n";
+                cout << "Поле 'Ім'я' не може бути порожнім. Повторіть ввід.\n";
             } else {
                 break;
             }
@@ -37,7 +37,7 @@ public:
             cout << "Введіть вік: ";
             cin >> age;
             if (cin.fail() || age < 18 || age > 65) {
-                cout << "Вік повинен бути в діапазоні від 18 до 65. Повторіть ввод.\n";
+                cout << "Вік повинен бути в діапазоні від 18 до 65. Повторіть ввід.\n";
                 
             } else {
                 cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Забираємо залишок нової лінії в потоці

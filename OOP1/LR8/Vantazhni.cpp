@@ -1,5 +1,6 @@
 #include "Vantazhni.h"
 #include <iostream>
+#include <limits>
 
 Vantazhni::Vantazhni(std::string n, double c, int d, double w)
     : Perevezennya(n, c, d), weight(w) {}
@@ -17,12 +18,22 @@ void Vantazhni::setWeight(double w) {
         std::cout << "Вага не може бути негативною!" << std::endl;
 }
 
-// Метод для введення даних
+// Метод для введення даних з перевірками
 void Vantazhni::input() {
-    Perevezennya::input(); // Викликаємо базовий метод для вводу загальних даних
-    std::cout << "Введіть вагу вантажу (тонни): ";
-    std::cin >> weight;
-    setWeight(weight); // Викликаємо метод для валідації
+    Perevezennya::input();
+
+    while (true) {
+        std::cout << "Введіть вагу вантажу (тонни): ";
+        std::cin >> weight;
+        if (std::cin.fail() || weight < 0) {
+            std::cout << "Вага повинна бути числом більше 0. Спробуйте ще раз.\n";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        } else {
+            setWeight(weight);
+            break;
+        }
+    }
 }
 
 void Vantazhni::display() const {
